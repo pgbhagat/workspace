@@ -1,0 +1,6 @@
+#Query column to csv mapping..
+symbol=Stock Symbol
+LastTradePriceOnly=Current Price
+OneyrTargetPrice=Year Target Price
+YearLow=Year High
+YearHigh=Year Low
