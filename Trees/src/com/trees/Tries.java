@@ -1,12 +1,13 @@
 package com.trees;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Tries {
 
 	static class TrieNode {
-		Map<Character, TrieNode> children;
 		boolean isEndOfWord;
+		Map<Character, TrieNode> children;
 
 		TrieNode() {
 			children = new HashMap<Character, Tries.TrieNode>();
@@ -16,8 +17,9 @@ public class Tries {
 		private static final TrieNode root = new TrieNode();
 
 		public void insertWord(String word) {
-			if (word == null)
+			if (word == null) {
 				return;
+			}
 
 			TrieNode current = root;
 			for (Character ch : word.toCharArray()) {
@@ -32,8 +34,10 @@ public class Tries {
 		}
 
 		public boolean searchWord(String word) {
-			if (word == null)
+			if (word == null) {
 				return false;
+			}
+
 			TrieNode current = root;
 			for (Character ch : word.toCharArray()) {
 				TrieNode node = current.children.get(ch);
@@ -47,8 +51,9 @@ public class Tries {
 
 		public boolean deleteWord(String word) {
 
-			if (word == null)
+			if (word == null) {
 				return false;
+			}
 			return delete(root, word, 0);
 
 		}
@@ -56,8 +61,9 @@ public class Tries {
 		private boolean delete(TrieNode current, String word, int index) {
 
 			if (index == word.length()) {
-				if (!current.isEndOfWord)
+				if (!current.isEndOfWord) {
 					return false;
+				}
 				current.isEndOfWord = false;
 				return current.children.isEmpty();
 			}

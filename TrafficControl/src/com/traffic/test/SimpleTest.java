@@ -7,8 +7,8 @@ public class SimpleTest {
 			"4,6,8", "5,6,10", };
 	public static String[] validInputTwo = new String[] { "4,6", "1,2,7", "1,2,8", "1,3,10", "2,4,4", "2,4,3",
 			"3,4,15", };
-	public static String[] validInputThree = new String[] { "8,11", "1,2,9", "1,5,2", "1,6,1", "2,3,4", "2,5,6",
-			"3,4,7", "4,8,4", "5,7,3", "5,7,3", "6,5,7", "7,8,2" };
+	public static String[] validInputThree = new String[] { "8,10", "1,2,9", "1,5,2", "1,6,1", "2,3,4", "2,5,6",
+			"3,4,7", "4,8,4", "5,7,3", "6,5,7", "7,8,2" };
 	public static String[] validInputFour = new String[] { "4,4", "1,2,7", "2,3,9", "2,4,11", "3,4,4", };
 	public static String[] validInputFive = new String[] { "6,8", "1,2,8", "1,4,7", "1,5,12", "2,3,4", "2,4,2", "3,6,6",
 			"4,6,8", "5,6,10" };
@@ -19,6 +19,9 @@ public class SimpleTest {
 
 	public static String[] validInputEight = new String[] { "7,7", "1,2,4", "1,5,2", "2,3,4", "3,4,2", "4,7,9", "5,6,3",
 			"6,4,8" };
+
+	public static String[] validInputNine = new String[] { "6,10", "1,2,4", "1,4,7", "1,5,9", "2,3,11", "2,4,3",
+			"3,4,2", "3,6,3", "4,5,8", "4,6,5", "5,6,2" };
 
 	public static String[] invalidInputOne = new String[] { "6,7", "1,2,8", "1,4,7", "1,5,12", "2,3,4", "2,4,2",
 			"3,6,6", "4,6,8", "5,6,10", };
@@ -84,15 +87,113 @@ public class SimpleTest {
 		testInput(validInputSeven);
 
 		System.out.println();
-		System.out.println("Valid input eightoutput ->");
+		System.out.println("Valid input eight output ->");
 		testInput(validInputEight);
+
+		System.out.println();
+		System.out.println("Valid input nine output ->");
+		testInput(validInputNine);
+
+		String[] validInputTen = new String[] { "4,5", "1,2,5", "1,3,7", "1,4,1", "2,4,3", "3,4,2" };
+		System.out.println();
+		System.out.println("Valid input Ten output ->");
+		testInput(validInputTen);
+
+		String[] validInput11 = new String[] { "8,11", "1,2,1", "1,3,3", "1,4,2", "2,3,2", "3,5,3", "4,3,2", "5,6,1", "5,7,2", "5,8,3",
+				 "6,8,2", "7,8,1" };
+		System.out.println();
+		System.out.println("Valid input eleven output ->");
+		testInput(validInput11);
+		
+		String [] validInput12 = new String[] { "8,11", "1,2,1", "1,3,4", "1,4,2", "2,3,1", "3,5,3", "4,3,2", "5,6,1", "5,8,4",
+				"5,7,2", "6,8,3", "7,8,5" };
+		System.out.println();
+		System.out.println("Valid input 12 output ->");
+		testInput(validInput12);
+		
+		String [] validInput13 = new String[] { "10,13", "1,2,8", 
+				"2,3,2", "2,4,2", "2,6,8", 
+				"3,5,3", "4,5,4", "6,5,8",
+				"5,8,8",
+				"5,9,4",
+				"8,9,8", 
+				"9,10,3", 
+				"9,10,1", 
+				"9,10,4", };
+		System.out.println();
+		System.out.println("Valid input 13 output ->");
+		testInput(validInput13);
+		
+		String [] validInput14 = new String[] { "6,8", 
+				"1,2,1", 
+				"2,3,1", "2,4,2", "2,5,1", 
+				"3,4,1", "4,6,6", "4,6,4",  
+				"5,4,1"
+				};
+		System.out.println();
+		System.out.println("Valid input 14 output ->");
+		testInput(validInput14);
+		
+		String [] validInput15  = new String[] { "4,3", 
+				"1,2,2", 
+				"2,3,4", 
+				"3,4,7",  
+				};
+		System.out.println();
+		System.out.println("Valid input 15 output ->");
+		testInput(validInput15);
+		
+		String [] validInput16  = new String[] { 
+				"6,7", 
+				"1,2,1", 
+				"2,3,2", 
+				"2,5,1",  
+				"3,4,1",
+				"4,6,1",
+				"5,3,1",
+				"5,6,3",
+				};
+		System.out.println();
+		System.out.println("Valid input 16 output ->");
+		testInput(validInput16);
+		
+		String [] validInput17  = new String[] { "5,7", 
+				"1,2,2", 
+				"2,3,1", 
+				"2,3,3",  
+				"2,3,2",
+				"3,4,4",
+				"4,5,2",
+				"4,5,5",  
+				};
+		
+		System.out.println();
+		System.out.println("Valid input 17 output ->");
+		testInput(validInput17);
+		
+		String [] validInput18  = new String[] { 
+				"4,7", 
+				"1,2,3", 
+				"1,2,10",
+				"2,3,2",
+				"2,3,5", 
+				"3,4,2", 
+				"3,4,5",
+				"3,4,1", 
+				};
+		System.out.println();
+		System.out.println("Valid input 18 output ->");
+		testInput(validInput18);
+		
 	}
+	
 
 	private static void testInput(String[] in) {
 		TrafficControl controller = new TrafficControl();
 		String[] output = controller.getTollPlan(in);
+		System.out.println("\tOutput in required format:");
 		for (String line : output) {
-			System.out.println(line);
+			System.out.println("\t\t" + line);
 		}
 	}
 

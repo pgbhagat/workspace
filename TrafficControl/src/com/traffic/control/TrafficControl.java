@@ -2,11 +2,14 @@ package com.traffic.control;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Junctions are mapped as vertices.<br>
@@ -48,6 +51,7 @@ public class TrafficControl {
 	private List<List<Edge>> verticesToEdges = new LinkedList<List<Edge>>();
 
 	private Map<Edge, Integer> edgeToTollPrice = new HashMap<Edge, Integer>();
+	private Set<Edge> lockedEdges = new HashSet<Edge>();
 	private Map<List<Edge>, Integer> pathToCost = new HashMap<List<Edge>, Integer>();
 	private Map<List<Edge>, Integer> pathToToll = new HashMap<List<Edge>, Integer>();
 	private Map<Edge, Integer> edgeToInputLineMapping = new LinkedHashMap<Edge, Integer>();
@@ -73,7 +77,7 @@ public class TrafficControl {
 
 		@Override
 		public String toString() {
-			return fromVertex + "->" + toVertex;
+			return "[" + fromVertex + "->" + toVertex + " with EdgeCost " + cost + "]";
 		}
 	}
 
@@ -87,6 +91,12 @@ public class TrafficControl {
 				minTollPrice = getMinimumTollPrice(allPossiblePaths);
 				removePathsWithCostPath(allPossiblePaths, minTollPrice);
 				if (findSolution(allPossiblePaths, 0)) {
+					if (!edgeToTollPrice.isEmpty()) {
+						System.out.println("\tEdges where toll needs to be put:");
+						for (Entry<Edge, Integer> edge : edgeToTollPrice.entrySet()) {
+							System.out.println("\t\t" + edge.getKey() + "; toll price to put = " + edge.getValue());
+						}
+					}
 					return formatOutput();
 				} else {
 					return new String[] { "No solution" };
@@ -122,6 +132,9 @@ public class TrafficControl {
 		List<List<Edge>> pathsToRemove = new LinkedList<List<Edge>>();
 		for (List<Edge> path : allPossiblePaths) {
 			if (pathToCost.get(path) == minTollPrice) {
+				for (Edge edge : path) {
+					lockedEdges.add(edge);
+				}
 				pathsToRemove.add(path);
 			}
 		}
@@ -139,16 +152,25 @@ public class TrafficControl {
 		List<Edge> path = allPaths.get(index);
 		for (Edge edge : path) {
 			if (validEdgePathForToll(edge, path, allPaths)) {
-				// put toll for this edge and on this path
-				edgeToTollPrice.put(edge, minTollPrice - pathToCost.get(path));
-				pathToToll.put(path, minTollPrice - pathToCost.get(path));
-				if (findSolution(allPaths, index + 1)) {
-					return true;
+				int tollValueToPut = getTollValue(edge, path, allPaths);
+				if (tollValueToPut >= 0) {
+					// put toll for this edge and on this path
+					if (tollValueToPut != 0) {
+						edgeToTollPrice.put(edge, tollValueToPut);
+						pathToToll.put(path, tollValueToPut);
+					}
+					if (findSolution(allPaths, index + 1)) {
+						return true;
+					}
+					// backtrack..remove the toll put in above line for this
+					// edge on
+					// this path
+					if (tollValueToPut != 0) {
+						edgeToTollPrice.remove(edge);
+						pathToToll.remove(path);
+					}
 				}
-				// backtrack..remove the toll put in above line for this edge on
-				// this path
-				edgeToTollPrice.remove(edge);
-				pathToToll.remove(path);
+
 			}
 		}
 		// no edge to put toll on
@@ -170,9 +192,17 @@ public class TrafficControl {
 	 * @return
 	 */
 	private boolean validEdgePathForToll(Edge edge, List<Edge> path, List<List<Edge>> allPaths) {
-		if (edgeToTollPrice.containsKey(edge) || pathToToll.get(path) != null) {
+		if (edgeToTollPrice.containsKey(edge) && (minTollPrice - pathToCost.get(path) == edgeToTollPrice.get(edge))) {
+			return true;
+		}
+		if (edgeToTollPrice.containsKey(edge) || lockedEdges.contains(edge)) {
 			return false;// this edge or path has already a toll
 		}
+		return true;
+	}
+
+	private int getTollValue(Edge edge, List<Edge> path, List<List<Edge>> allPaths) {
+		int tollValue = minTollPrice - pathToCost.get(path);
 		List<List<Edge>> edgeBelongToPath = new ArrayList<List<Edge>>();
 
 		for (List<Edge> eachPath : allPaths) {
@@ -184,12 +214,17 @@ public class TrafficControl {
 			for (List<Edge> eachPath : edgeBelongToPath) {
 				for (Edge eachEdge : eachPath) {
 					if (edgeToTollPrice.containsKey(eachEdge)) {
-						return false;// since a toll is already put
+						if (minTollPrice - pathToCost.get(path) != edgeToTollPrice.get(eachEdge)) {
+							tollValue = -1;
+							break;
+						} else {
+							tollValue = 0;
+						}
 					}
 				}
 			}
 		}
-		return true;
+		return tollValue;
 	}
 
 	private int getMinimumTollPrice(List<List<Edge>> allPaths) {

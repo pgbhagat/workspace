@@ -6,25 +6,19 @@ public class AVLTree {
 		Node left, right;
 		int data;
 		int height;
-		int size;
 
 		Node(int data) {
 			this.data = data;
 		}
 
-		public static Node newNode(int data) {
-			return new Node(data);
-		}
 	}
 
 	private Node leftRotate(Node root) {
 		Node newRoot = root.right;
 		root.right = root.right.left;
 		newRoot.left = root;
-		root.height = setHeight(root);
-		root.size = setSize(root);
-		newRoot.height = setHeight(newRoot);
-		newRoot.size = setSize(newRoot);
+		root.height = getNewHeight(root);
+		newRoot.height = getNewHeight(newRoot);
 		return newRoot;
 	}
 
@@ -32,21 +26,19 @@ public class AVLTree {
 		Node newRoot = root.left;
 		root.left = root.left.right;
 		newRoot.right = root;
-		root.height = setHeight(root);
-		root.size = setSize(root);
-		newRoot.height = setHeight(newRoot);
-		newRoot.size = setSize(newRoot);
+		root.height = getNewHeight(root);
+		newRoot.height = getNewHeight(newRoot);
 		return newRoot;
 	}
 
-	private int setHeight(Node root) {
+	private int getNewHeight(Node root) {
 		if (root == null) {
 			return 0;
 		}
 		return 1 + Math.max((root.left != null ? root.left.height : 0), (root.right != null ? root.right.height : 0));
 	}
 
-	private int height(Node root) {
+	private int getHeight(Node root) {
 		if (root == null) {
 			return 0;
 		} else {
@@ -54,16 +46,9 @@ public class AVLTree {
 		}
 	}
 
-	private int setSize(Node root) {
-		if (root == null) {
-			return 0;
-		}
-		return 1 + Math.max((root.left != null ? root.left.size : 0), (root.right != null ? root.right.size : 0));
-	}
-
 	public Node insert(Node root, int data) {
 		if (root == null) {
-			return Node.newNode(data);
+			return new Node(data);
 		}
 		if (root.data <= data) {
 			root.right = insert(root.right, data);
@@ -72,28 +57,27 @@ public class AVLTree {
 		}
 		int balance = balance(root.left, root.right);
 		if (balance > 1) {
-			if (height(root.left.left) >= height(root.left.right)) {
+			if (getHeight(root.left.left) >= getHeight(root.left.right)) {
 				root = rightRotate(root);
 			} else {
 				root.left = leftRotate(root.left);
 				root = rightRotate(root);
 			}
 		} else if (balance < -1) {
-			if (height(root.right.right) >= height(root.right.left)) {
+			if (getHeight(root.right.right) >= getHeight(root.right.left)) {
 				root = leftRotate(root);
 			} else {
 				root.right = rightRotate(root.right);
 				root = leftRotate(root);
 			}
 		} else {
-			root.height = setHeight(root);
-			root.size = setSize(root);
+			root.height = getNewHeight(root);
 		}
 		return root;
 	}
 
 	private int balance(Node rootLeft, Node rootRight) {
-		return height(rootLeft) - height(rootRight);
+		return getHeight(rootLeft) - getHeight(rootRight);
 	}
 
 	public static void main(String args[]) {
