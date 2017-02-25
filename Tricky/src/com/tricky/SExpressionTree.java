@@ -48,20 +48,36 @@ public class SExpressionTree {
 					childs.add(parentChild[1]);
 				}
 			}
-			if (isCyclePresent(pairs)) {
-				ans = "E3";// cycle error
-			} else {
-				try {
-					char root = findRoot(pairs);
-					Node binaryTreeRoot = buildBinaryTree(root, pairs);
-					ans = getSeq(binaryTreeRoot);
-				} catch (MultipleRootException e) {
-					ans = "E4";// mutiple roots
+			if (isValidChars(pairs)) {
+				if (isCyclePresent(pairs)) {
+					ans = "E3";// cycle error
+				} else {
+					try {
+						char root = findRoot(pairs);
+						Node binaryTreeRoot = buildBinaryTree(root, pairs);
+						ans = getSeq(binaryTreeRoot);
+					} catch (MultipleRootException e) {
+						ans = "E4";// mutiple roots
+					}
 				}
 			}
 		}
 		return ans;
 
+	}
+
+	private static boolean isValidChars(Map<Character, Set<Character>> pairs) {
+		for (Entry<Character, Set<Character>> entry : pairs.entrySet()) {
+			Set<Character> thisChilds = entry.getValue();
+			char key = entry.getKey();
+			if (key < 'A' || key > 'Z')
+				return false;
+			for (Character child : thisChilds) {
+				if (child < 'A' || child > 'Z')
+					return false;
+			}
+		}
+		return true;
 	}
 
 	private static String getSeq(Node root) {
@@ -162,7 +178,13 @@ public class SExpressionTree {
 	}
 
 	public static void main(String... args) {
+		// more than two childs
 		// String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (F,G), (A,K)";
+		// more than one root
+		// String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (F,G), (K,Z)";
+		// non A-Z range
+		// String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (r,G)";
+		// String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (1,G)";
 		String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (F,G)";
 		String ans = SExpression(nodes);
 		System.out.println(ans);
