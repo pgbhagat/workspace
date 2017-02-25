@@ -39,11 +39,11 @@ public class SExpressionTree {
 				}
 				if (childs.size() == 2) {
 					ans = "E1";// more than two childs error
-					break;
+					return ans;
 				} else {
 					if (childs.contains(parentChild[1])) {
 						ans = "E2";// duplicate edge error
-						break;
+						return ans;
 					}
 					childs.add(parentChild[1]);
 				}
@@ -162,6 +162,7 @@ public class SExpressionTree {
 	}
 
 	public static void main(String... args) {
+		// String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (F,G), (A,K)";
 		String nodes = "(A,B) (A,C) (B,D) (D,E) (C,F) (F,G)";
 		String ans = SExpression(nodes);
 		System.out.println(ans);
