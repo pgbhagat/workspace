@@ -9,7 +9,7 @@ public class RatInMaze {
 				{ 1, 1, 1, 0, 1 }, 
 				{ 0, 1, 0, 1, 1 }, 
 				{ 1, 1, 0, 1, 0 },
-				{ 1, 1, 1, 1, 0 },
+				{ 1, 1, 1, 1, 1 },
 		};
 		//@formatter:on
 		findSolution(maze);
@@ -34,7 +34,7 @@ public class RatInMaze {
 	}
 
 	private static boolean find(int[][] maze, int[][] solution, int row, int col, String dir) {
-		if (row == maze.length - 1 && col == maze[0].length - 1) {
+		if (row == maze.length - 1 && col == maze[0].length - 1 && isSafeCell(maze, row, col)) {
 			solution[row][col] = 1;
 			return true;
 		}

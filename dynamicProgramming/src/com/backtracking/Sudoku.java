@@ -1,5 +1,7 @@
 package com.backtracking;
 
+import java.util.List;
+
 public class Sudoku {
 
 	private static final int BOX_SIZE = 3;
@@ -47,6 +49,7 @@ public class Sudoku {
 	}
 
 	private static boolean isSafe(int[][] inputGrid, int row, int col, int num) {
+
 		if (!usedInRow(inputGrid, row, num) && !usedInCol(inputGrid, col, num)
 				&& !usedInBox(inputGrid, row - row % BOX_SIZE, col - col % BOX_SIZE, num)) {
 			return true;

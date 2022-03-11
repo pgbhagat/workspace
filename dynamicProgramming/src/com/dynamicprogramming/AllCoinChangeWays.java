@@ -6,12 +6,14 @@ import java.util.List;
 public class AllCoinChangeWays {
 
 	public static void main(String[] args) {
+
 		int[] coins = { 1, 2, 3, 4 };
 		int amount = 5;
 		List<List<Integer>> ways = getAllPossibleCoinsForAmount(amount, coins);
 		for (List<Integer> way : ways) {
 			System.out.println(way);
 		}
+
 	}
 
 	private static List<List<Integer>> getAllPossibleCoinsForAmount(int amount, int[] coins) {

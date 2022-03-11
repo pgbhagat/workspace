@@ -8,13 +8,13 @@ public class LongestCommonSubsequence {
 		}
 		int[][] longestCommonSub = new int[strOne.length + 1][strTwo.length + 1];
 		String[][] solution = new String[strOne.length + 1][strTwo.length + 1];
-		// if A is null then LCS of A, B =0
+		// if A is null then LCS of A, B = 0
 		for (int i = 0; i <= strTwo.length; i++) {
 			longestCommonSub[0][i] = 0;
 			solution[0][i] = "0";
 		}
 
-		// if B is null then LCS of A, B =0
+		// if B is null then LCS of A, A = 0
 		for (int i = 0; i <= strOne.length; i++) {
 			longestCommonSub[i][0] = 0;
 			solution[i][0] = "0";

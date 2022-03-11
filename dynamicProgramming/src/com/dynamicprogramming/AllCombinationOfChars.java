@@ -4,7 +4,7 @@ public class AllCombinationOfChars {
 
 	public static void main(String[] args) {
 		char[] input = new char[] { '1', '0', '2' };
-		int length = 5;
+		int length = 2;
 		printAllPermutationsOfLength(input, 0, new char[length]);
 	}
 
