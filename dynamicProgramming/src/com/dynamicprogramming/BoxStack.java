@@ -39,8 +39,6 @@ public class BoxStack {
 			int d = dimentions[i][2];
 
 			boxes[3 * i] = new Box(h, w, d);
-			//boxes[3 * i + 1] = new Box(w, h > d ? h : d, h <= d ? h : d);
-			//boxes[3 * i + 2] = new Box(d, h > w ? h : w, h <= w ? h : w);
 			boxes[3 * i + 1] = new Box(w, h, d);
 			boxes[3 * i + 2] = new Box(d, h, w);
 		}

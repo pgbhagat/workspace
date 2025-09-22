@@ -87,17 +87,17 @@ public class Sudoku {
 	}
 
 	private static int[] getEmptyCell(int[][] inputGrid) {
-		int[] cell = new int[] { -1, -1 };
+		int[] emptyCell = new int[] { -1, -1 };
 		for (int i = 0; i < inputGrid.length; i++) {
 			for (int j = 0; j < inputGrid[0].length; j++) {
 				if (inputGrid[i][j] == 0) {
-					cell[0] = i;
-					cell[1] = j;
-					return cell;
+					emptyCell[0] = i;
+					emptyCell[1] = j;
+					return emptyCell;
 				}
 			}
 		}
-		return cell;
+		return emptyCell;
 	}
 
 	private static void printGrid(int[][] outputGrid) {

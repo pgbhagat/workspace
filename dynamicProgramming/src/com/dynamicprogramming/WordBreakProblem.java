@@ -10,8 +10,8 @@ public class WordBreakProblem {
 			System.out.println(answer);
 			return true;
 		} else {
-			String subWord = "";
 			int startIndex = 0;
+			String subWord = "";
 			while (startIndex < word.length()) {
 				subWord += word.charAt(startIndex);
 				if (dict.contains(subWord)) {
