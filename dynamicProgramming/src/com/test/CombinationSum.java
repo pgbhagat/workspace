@@ -23,7 +23,6 @@ public class CombinationSum {
   public void backtrack(int target, int[] candidates, List<Integer> intermediateResult, List<List<Integer>> result) {
     if (target == 0) {
       result.add(new LinkedList<>(intermediateResult));
-      List<Integer> list = Arrays.stream(candidates).boxed().collect(Collectors.toList());
       return;
     }
     if (target < 0) {

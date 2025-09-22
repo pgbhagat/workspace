@@ -22,7 +22,7 @@ public class RodCutProblem {
 	public static int[][] rodCutDynamicProgramming(int rodLength, int[] costs) {
 		int[][] solution = new int[costs.length][rodLength + 1];
 		Arrays.sort(costs);
-		// populate the last row...
+		// populate the first row...
 		for (int i = 1; i < solution[0].length; i++) {
 			solution[0][i] = costs[0] * i;
 		}

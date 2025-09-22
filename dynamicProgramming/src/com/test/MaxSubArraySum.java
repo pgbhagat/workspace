@@ -13,8 +13,8 @@ public class MaxSubArraySum {
       return 0;
     }
 
-    int maxSum = -9999;
-    int sumSoFar = 0;
+    int maxSum = nums[0];
+    int sumSoFar = nums[0];
 
     for (int i = 1; i < nums.length; i++) {
       sumSoFar = sumSoFar + nums[i];
